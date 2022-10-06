@@ -56,17 +56,20 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         var params = new URLSearchParams();
-                        params.append("username","user");
-                        params.append("password","1234567");
+                        params.append("username",this.form.username);
+                        params.append("password",this.form.password);
                         loginRequest(params).then(res=>{
-                            console.log(res);
+                           //保存token到本地
+                           var token = res.data.token;
+                           localStorage.setItem('token',token)
+                           alert(res.msg)
                         })
                     } else {
                         this.dialogVisible = true;
                         return false;
                     }
                 });
-            }
+            },
         }
     }
 </script>

@@ -8,6 +8,10 @@ const instance = Axios.create({
 
 //请求拦截
 instance.interceptors.request.use(config => {
+    // var token = localStorage.getItem('token');
+    // if (token) {
+    //     config.headers.token = token
+    // }
     return config
 },err => {
     return Promise.reject(err)
@@ -16,12 +20,11 @@ instance.interceptors.request.use(config => {
 
 //响应拦截
 instance.interceptors.response.use(res => {
-    console.log(res)
-    // if (res.code && res.code !== 200) {
-    //     //返回不等于200
-    //     alert(res.message)
-    // }
-    return res
+    if (res.data && res.data.code !== 200) {
+        alert(res.data.msg)
+    }else {
+        return res.data
+    }
 },err => {
     return Promise.reject(err)
 })
